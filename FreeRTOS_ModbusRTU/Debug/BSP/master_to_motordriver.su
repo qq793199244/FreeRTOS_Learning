@@ -1,0 +1,3 @@
+../BSP/master_to_motordriver.c:21:6:MotorDriverInit	4	static
+../BSP/master_to_motordriver.c:33:6:ProcessData_RecvFromMotorDriver	16	static
+../BSP/master_to_motordriver.c:86:6:ProcessData_TransToMotorDriver	136	static

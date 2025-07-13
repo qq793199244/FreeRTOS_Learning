@@ -1,0 +1,4 @@
+../BSP/slave_to_plc.c:22:6:ModbusRtuSlaveInit	4	static
+../BSP/slave_to_plc.c:35:6:ProcessData_RecvFromPLC	16	static
+../BSP/slave_to_plc.c:62:6:ProcessFuncNum_RecvFromPLC	16	static
+../BSP/slave_to_plc.c:237:6:CommuErrorTrs	16	static

@@ -1,0 +1,3 @@
+../BSP/modbus_rtu_base.c:16:10:CRCCalc	24	static
+../BSP/modbus_rtu_base.c:32:6:SendModbusFrame	32	static
+../BSP/modbus_rtu_base.c:55:6:UART_SendDataWithSemaphore	24	static

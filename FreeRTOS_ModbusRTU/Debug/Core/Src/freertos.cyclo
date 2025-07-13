@@ -1,0 +1,6 @@
+../Core/Src/freertos.c:131:6:MX_FREERTOS_Init	1
+../Core/Src/freertos.c:189:6:Start_RecvData	10
+../Core/Src/freertos.c:256:6:Start_Process_Data	4
+../Core/Src/freertos.c:287:6:Start_MonitorMotor_Data	9
+../Core/Src/freertos.c:359:6:Start_Control_Load	21
+../Core/Src/freertos.c:473:6:Start_Main_Control	3
