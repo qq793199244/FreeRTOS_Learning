@@ -3,4 +3,4 @@
 ../Core/Src/freertos.c:256:6:Start_Process_Data	16	static
 ../Core/Src/freertos.c:287:6:Start_MonitorMotor_Data	16	static
 ../Core/Src/freertos.c:359:6:Start_Control_Load	88	static
-../Core/Src/freertos.c:473:6:Start_Main_Control	16	static
+../Core/Src/freertos.c:477:6:Start_Main_Control	16	static

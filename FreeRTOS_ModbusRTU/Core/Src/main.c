@@ -66,8 +66,8 @@ uint8_t UART3_RX_INT_FLAG = 0;
 uint8_t MONITORING_MOTOR_FLAG = 0;
 uint8_t MONITORING_LOAD_FLAG = 0;
 
-uint8_t monitoring_counter_100ms;
-uint8_t monitoring_counter_500ms;
+uint8_t monitoring_counter_50ms;		// TIM2 读电缸数据
+uint8_t monitoring_counter_400ms;		// TIM3 读电机驱动器数据
 
 
 
@@ -153,11 +153,11 @@ int main(void)
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart3, uart3_rx_buf, UART3_RX_BUF_SIZE);
 	__HAL_DMA_DISABLE_IT(&hdma_usart3_rx, DMA_IT_HT);
 
-	ModbusRtuSlaveInit();
-	MotorDriverInit();
-	LoadInit();
+	ModbusRtuSlaveInit();		// 单片机作为从机的初始化
+	MotorDriverInit();			// 单片机作为电机驱动器主机的初始化
+	LoadInit();					// 单片机作为电缸主机的初始化
 
-	LoadStatusInit();
+	LoadStatusInit();			// 电缸初始状态，目标电流/目标速度/目标位置
 
 
   /* USER CODE END 2 */
@@ -247,12 +247,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   }
   /* USER CODE BEGIN Callback 1 */
   if (htim->Instance == TIM2) {
-	  monitoring_counter_100ms++;
+	  // 每50ms进一次中断
+	  monitoring_counter_50ms++;
 	  MONITORING_LOAD_FLAG = (load_idx++) % 4 + 1;
   }
 
   if (htim->Instance == TIM3) {
-	  monitoring_counter_500ms++;
+	  // 每400ms进一次中断
+	  monitoring_counter_400ms++;
 	  MONITORING_MOTOR_FLAG = (motor_idx++) % 4 + 1;
   }
 

@@ -95,7 +95,7 @@ osThreadId_t Ctrl_Load_TaskHandle;
 const osThreadAttr_t Ctrl_Load_Task_attributes = {
   .name = "Ctrl_Load_Task",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityHigh,
+  .priority = (osPriority_t) osPriorityRealtime,
 };
 /* Definitions for Main_Ctrl_Task */
 osThreadId_t Main_Ctrl_TaskHandle;
@@ -366,7 +366,7 @@ void Start_Control_Load(void *argument)
 		  case 1:
 				if (osSemaphoreAcquire(frameSendSemaphoreHandle, osWaitForever) == osOK) {
 					HAL_UART_Transmit_DMA(&huart3, send_to_load[0], 8);
-					osDelay(40);
+					osDelay(10);
 					osSemaphoreRelease(frameSendSemaphoreHandle);
 				}
 				else {
@@ -376,11 +376,12 @@ void Start_Control_Load(void *argument)
 				if (1 == slaveStr.ReadRegsGroup[0]) {
 					if (slaveStr.ReadRegsGroup[6] > 2600) {
 						uint8_t send_data[8] = {0x01, 0x06, 0x00, 0x36, 0x00, 0x28,};
-						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 5);
+						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 8);
 					}
-					if (slaveStr.ReadRegsGroup[6] < 1700) {
+					if ((slaveStr.ReadRegsGroup[6] < 1950) && (slaveStr.ReadRegsGroup[6] != 0)) {
 						uint8_t send_data[8] = {0x01, 0x06, 0x00, 0x36, 0x01, 0x5E,};
-						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 5);
+						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 8);
+						osDelay(30);
 					}
 				}
 
@@ -390,21 +391,22 @@ void Start_Control_Load(void *argument)
 		  case 2:
 				if (osSemaphoreAcquire(frameSendSemaphoreHandle, osWaitForever) == osOK) {
 					HAL_UART_Transmit_DMA(&huart3, send_to_load[1], 8);
-					osDelay(25);
+					osDelay(10);
 					osSemaphoreRelease(frameSendSemaphoreHandle);
 				}
 				else {
-						// 处理信号量获取失败的情况（如记录错误�?
+						// 处理信号量获取失败的情况
 				}
 
 				if (1 == slaveStr.ReadRegsGroup[10]) {
 					if (slaveStr.ReadRegsGroup[16] > 2600) {
 						uint8_t send_data[8] = {0x02, 0x06, 0x00, 0x36, 0x00, 0x28,};
-						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 5);
+						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 8);
 					}
-					if (slaveStr.ReadRegsGroup[16] < 1700) {
+					if ((slaveStr.ReadRegsGroup[16] < 1950) && (slaveStr.ReadRegsGroup[6] != 0)) {
 						uint8_t send_data[8] = {0x02, 0x06, 0x00, 0x36, 0x01, 0x5E,};
-						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 5);
+						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 8);
+						osDelay(30);
 					}
 				}
 
@@ -414,7 +416,7 @@ void Start_Control_Load(void *argument)
 		  case 3:
 				if (osSemaphoreAcquire(frameSendSemaphoreHandle, osWaitForever) == osOK) {
 					HAL_UART_Transmit_DMA(&huart3, send_to_load[2], 8);
-					osDelay(25);
+					osDelay(10);
 					osSemaphoreRelease(frameSendSemaphoreHandle);
 				}
 				else {
@@ -423,11 +425,12 @@ void Start_Control_Load(void *argument)
 				if (1 == slaveStr.ReadRegsGroup[20]) {
 					if (slaveStr.ReadRegsGroup[26] > 2600) {
 						uint8_t send_data[8] = {0x03, 0x06, 0x00, 0x36, 0x00, 0x28,};
-						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 5);
+						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 8);
 					}
-					if (slaveStr.ReadRegsGroup[26] < 1700) {
+					if ((slaveStr.ReadRegsGroup[26] < 1950) && (slaveStr.ReadRegsGroup[6] != 0)) {
 						uint8_t send_data[8] = {0x03, 0x06, 0x00, 0x36, 0x01, 0x5E,};
-						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 5);
+						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 8);
+						osDelay(30);
 					}
 				}
 
@@ -437,7 +440,7 @@ void Start_Control_Load(void *argument)
 		  case 4:
 				if (osSemaphoreAcquire(frameSendSemaphoreHandle, osWaitForever) == osOK) {
 					HAL_UART_Transmit_DMA(&huart3, send_to_load[3], 8);
-					osDelay(25);
+					osDelay(10);
 					osSemaphoreRelease(frameSendSemaphoreHandle);
 				}
 				else {
@@ -446,11 +449,12 @@ void Start_Control_Load(void *argument)
 				if (1 == slaveStr.ReadRegsGroup[30]) {
 					if (slaveStr.ReadRegsGroup[36] > 2600) {
 						uint8_t send_data[8] = {0x03, 0x06, 0x00, 0x36, 0x00, 0x28,};
-						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 5);
+						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 8);
 					}
-					if (slaveStr.ReadRegsGroup[36] < 1700) {
+					if ((slaveStr.ReadRegsGroup[36] < 1950) && (slaveStr.ReadRegsGroup[6] != 0)) {
 						uint8_t send_data[8] = {0x03, 0x06, 0x00, 0x36, 0x01, 0x5E,};
-						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 5);
+						UART_SendDataWithSemaphore(&huart3, send_data, 8, osWaitForever, 8);
+						osDelay(30);
 					}
 				}
 
@@ -458,7 +462,7 @@ void Start_Control_Load(void *argument)
 			  break;
 	  }
 
-	  osDelay(20);
+	  osDelay(5);
   }
   /* USER CODE END Start_Control_Load */
 }
